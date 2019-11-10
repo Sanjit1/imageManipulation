@@ -10,6 +10,7 @@ fig, axes = plotter.subplots(1, 1)
 axes.imshow(picture_cat, interpolation='none')
 plotter.show()
 
+
 def on_click(event):
     global ix, iy
     ix, iy = event.xdata, event.ydata
@@ -25,7 +26,8 @@ def on_click(event):
             r = picture_load[x, y][0]
             b = picture_load[x, y][1]
             g = picture_load[x, y][2]
-            if color[0]+20 > r > color[0]-20 and color[1] + 20 > b > color[1] - 20 and color[2] + 20 > g > color[2] - 20:
+            if color[0] + 20 > r > color[0] - 20 and color[1] + 20 > b > color[1] - 20 and color[2] + 20 > g > color[
+                2] - 20:
                 picture_load[x, y] = (255, 255, 255)
     picture_cat.save(picture_jpg)
     return coords
