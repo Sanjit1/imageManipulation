@@ -1,22 +1,31 @@
-import matplotlib.pyplot as plotter
+import matplotlib.pyplot as plt
 import tkinter
-import os.path
 import PIL
 
 window = tkinter.Tk()
 window.title('Background Eraser')
 
+picture = ''
+picture_jpg = ''
+
+
+def save_file():
+    picture.save((picture_jpg[:-5] + ".png"), 'PNG')
+    print("Saved Location: " + picture_jpg[:-5] + ".png")
+
 
 def select_file():
     print('hi')
+    plotter = plt
     picture_jpg = tkinter.filedialog.askopenfilename(
         filetypes=(("Pictures", "*.png;*.jpg;*.jpeg;*.PNG;*.JPG;*.JPEG;*.gif;*.GIF;*.BMP,*.bmp"),
                    ("AlL FiLes StUPid", "*.*")))
-    cwd = os.path.dirname(os.path.abspath(__file__))
-    picture_cat = PIL.Image.open(picture_jpg).convert('RGBA')
-    picture_load = picture_cat.load()
+    picture = PIL.Image.open(picture_jpg).convert('RGBA')
+    plotter.ion()
+    picture_load = picture.load()
     fig, axes = plotter.subplots(1, 1)
-    axes.imshow(picture_cat, interpolation='none')
+    plotter.imshow(picture)
+
     plotter.show()
 
     def on_click(event):
@@ -29,8 +38,8 @@ def select_file():
             fig.canvas.mpl_disconnect(cid)
         print(color)
 
-        for x in range(picture_cat.size[0]):
-            for y in range(picture_cat.size[1]):
+        for x in range(picture.size[0]):
+            for y in range(picture.size[1]):
                 r = picture_load[x, y][0]
                 b = picture_load[x, y][1]
                 g = picture_load[x, y][2]
@@ -38,14 +47,21 @@ def select_file():
                         color[
                             2] - 20:
                     picture_load[x, y] = (255, 255, 255, 0)
-        picture_cat.save((picture_jpg[:-5]+".png"), 'PNG')
+
+        picture.save((picture_jpg[:-5] + ".png"), 'PNG')
+
+        fig_new, axes_new = plotter.subplots(1, 1)
+        axes_new.imshow(picture, interpolation='none')
+        plotter.show()
+        ci = fig_new.canvas.mpl_connect('button_press_event', on_click)
         return coords
 
     cid = fig.canvas.mpl_connect('button_press_event', on_click)
 
 
 select_file_button = tkinter.Button(window, text='Select File', width=25, command=select_file)
+save_file_button = tkinter.Button(window, text='Save', width=25)
 select_file_button.pack()
+save_file_button.pack()
 
 window.mainloop()
-
