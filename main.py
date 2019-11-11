@@ -1,12 +1,26 @@
 import matplotlib.pyplot as plt
 import tkinter
 import PIL
+from PIL import ImageTk
 
 window = tkinter.Tk()
 window.title('Background Eraser')
+window.geometry("800x450")
+
+images = tkinter.Label(window)
 
 picture = ''
 picture_jpg = ''
+
+
+def all_children(wind):
+    _list = wind.winfo_children()
+
+    for item in _list:
+        if item.winfo_children():
+            _list.extend(item.winfo_children())
+
+    return _list
 
 
 def save_file():
@@ -34,8 +48,6 @@ def select_file():
         print('x = %d, y = %d' % (ix, iy))
         coords = [(ix, iy)]
         color = picture_load[ix, iy]
-        if len(coords) == 2:
-            fig.canvas.mpl_disconnect(cid)
         print(color)
 
         for x in range(picture.size[0]):
@@ -50,18 +62,29 @@ def select_file():
 
         picture.save((picture_jpg[:-5] + ".png"), 'PNG')
 
+        image_tk = ImageTk.PhotoImage(picture)
+
+        for item in all_children(window):
+            item.pack_forget()
+            
+        title = tkinter.Label(window, text='Background Eraser, by Sanjit and Wyatt', width=69).pack()
+        select_file_button = tkinter.Button(window, text='Select File', width=25, command=select_file).pack()
+        save_file_button = tkinter.Button(window, text='Save', width=25, command=save_file).pack()
+        images = tkinter.Label(window, image=image_tk, width=picture.size[0])
+        images.pack()
+        window.mainloop()
+
         fig_new, axes_new = plotter.subplots(1, 1)
         axes_new.imshow(picture, interpolation='none')
         plotter.show()
-        ci = fig_new.canvas.mpl_connect('button_press_event', on_click)
+        fig_new.canvas.mpl_connect('button_press_event', on_click)
         return coords
 
-    cid = fig.canvas.mpl_connect('button_press_event', on_click)
+    fig.canvas.mpl_connect('button_press_event', on_click)
 
 
-select_file_button = tkinter.Button(window, text='Select File', width=25, command=select_file)
-save_file_button = tkinter.Button(window, text='Save', width=25)
-select_file_button.pack()
-save_file_button.pack()
+title = tkinter.Label(window, text='Background Eraser, by Sanjit and Wyatt', width=69).pack()
+select_file_button = tkinter.Button(window, text='Select File', width=25, command=select_file).pack()
+save_file_button = tkinter.Button(window, text='Save', width=25, command=save_file).pack()
 
 window.mainloop()
