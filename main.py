@@ -1,9 +1,11 @@
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as plotter_new
 import tkinter
 import PIL
 import os.path
 from PIL import ImageTk
 from PIL import Image
+from tkinter import filedialog
 
 window = tkinter.Tk()
 window.title('Background Eraser')
@@ -59,22 +61,12 @@ def select_file():
 
         #picture.save((picture_jpg[:-5] + ".png"), 'PNG')
 
-        image_tk = PIL.ImageTk.PhotoImage(picture)
 
-        for item in all_children(window):
-            item.pack_forget()
-            
-        title = tkinter.Label(window, text='Background Eraser, by Sanjit and Wyatt', width=69).pack()
-        select_file_button = tkinter.Button(window, text='Select File', width=25, command=select_file).pack()
-        save_file_button = tkinter.Button(window, text='Save', width=25, command=save_file).pack()
-        #images = tkinter.Label(window, image=image_tk, width=picture.size[0])
-        #images.pack()
-        plotter_new = plt
         fig_new, axes_new = plotter_new.subplots(1, 1)
-        plotter_new.imshow(picture)
+        axes_new.imshow(picture)
         plotter_new.show()
         fig_new.canvas.mpl_connect('button_press_event', on_click)
-        window.mainloop()
+
         
 
         return coords
