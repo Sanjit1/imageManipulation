@@ -54,9 +54,9 @@ def select_file():
                 r = picture_load[x, y][0]
                 b = picture_load[x, y][1]
                 g = picture_load[x, y][2]
-                if color[0] + 20 > r > color[0] - 20 and color[1] + 20 > b > color[1] - 20 and color[2] + 20 > g > \
+                if color[0] + 5 > r > color[0] - 5 and color[1] + 5 > b > color[1] - 5 and color[2] + 5 > g > \
                         color[
-                            2] - 20:
+                            2] - 5:
                     picture_load[x, y] = (255, 255, 255, 0)
 
         #picture.save((picture_jpg[:-5] + ".png"), 'PNG')
