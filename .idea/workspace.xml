@@ -74,7 +74,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="60" />
     <option name="y" value="84" />
     <option name="width" value="1026" />
@@ -181,9 +181,9 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.images" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.nyan" />
-      <item itemvalue="Python.images" />
     </list>
   </component>
   <component name="SvnConfiguration">
